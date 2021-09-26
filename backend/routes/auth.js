@@ -25,17 +25,22 @@ router.post('/createuser', [
     // res.send(req.body);
 
     // Checks whether the user with this email exists or not
-    let user = await User.findOne({ email: req.body.email });
-    if (user) {
-        return res.status(400).json({error : "Sorry a user with same email already exists"});
+
+    try {
+        let user = await User.findOne({ email: req.body.email });
+        if (user) {
+            return res.status(400).json({error : "Sorry a user with same email already exists"});
+        }
+        
+        user = await User.create({
+            name: req.body.name,
+            email: req.body.email,
+            password: req.body.password,
+        })
+        res.json({"Successfully":`Merged ${user}`});
+    }catch(err) {
+        console.error(err.message);
     }
-    
-    user = await User.create({
-        name: req.body.name,
-        email: req.body.email,
-        password: req.body.password,
-    })
-    res.json({"Successfully":"Merged"});
 
 });
 
