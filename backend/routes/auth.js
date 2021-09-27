@@ -1,13 +1,20 @@
 const express = require('express');
-const User = require('../models/User');
-const router = express.Router();
-const { body, validationResult } = require('express-validator');
+const User = require('../models/User');                                  // Structure or model in which data is stored
+const router = express.Router();                                         // To connect to its various components
+const bcrypt = require('bcryptjs');                                      // Encryption of password   
+const { body, validationResult } = require('express-validator');         // Validation of models
+const jwt = require('jsonwebtoken');                                      // User Authentication token
+const fetchuser = require('../middleware/fetchuser');
+const JWT_SECRET = "fucktheworld";
 
-// POST request sent !
+//Route1 :-  POST request sent "/api/auth/createuser" ! To create the user so as to store in DB
 router.post('/createuser', [
+
+    // Express Validator
     body('name', 'Enter a valid name').isLength({ min: 5}),
     body('email', 'Enter a valid email').isEmail(),
     body('password', "Password length must be at least 8 characters").isLength({ min: 8}),
+
 ], async(req, res) => {
 
     // if there are errors, return a Bad Request and the errors
@@ -24,25 +31,99 @@ router.post('/createuser', [
     // user.save();
     // res.send(req.body);
 
-    // Checks whether the user with this email exists or not
 
+    // Checks whether the user with this email exists or not
     try {
+        // returns a promise that is resolved by async/await approach
         let user = await User.findOne({ email: req.body.email });
         if (user) {
             return res.status(400).json({error : "Sorry a user with same email already exists"});
         }
-        
+
+         //Returns Promise
+        const salt = await bcrypt.genSalt(10);
+        const securePassword = await bcrypt.hash(req.body.password, salt);
+
+        //Creating a new user
         user = await User.create({
             name: req.body.name,
             email: req.body.email,
-            password: req.body.password,
-        })
-        res.json({"Successfully":`Merged ${user}`});
-    }catch(err) {
-        console.error(err.message);
-    }
+            password: securePassword
+        });
 
+
+        const data = {
+            user:{
+                id:user.id,
+            }
+        }
+        const authToken = jwt.sign(data, JWT_SECRET);
+        res.json({authToken});
+
+        // res.json({"Successfully":`Merged ${user}`});
+    }
+    //Catching the internal error
+    catch(err) {
+        console.error(err.message);
+        res.status(500).send("Some error occurred");
+    }
 });
 
+//Route2 :-  POST request sent "api/auth/login" ! To authenticate the user so as to store in DB
+router.post('/login', [
+
+    // Express Validator
+    body('email', 'Enter a valid email').isEmail(),
+    body('password', "Password length must be at least 8 characters").isLength({ min: 8}),
+
+], async(req, res) => {
+
+    // if there are errors, return a Bad Request and the errors
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+    }
+
+    const {email, password} = req.body;
+    try{
+        // Finds user's email
+        let user = await User.findOne({email});
+        if(!user){
+            res.status(400).json({errors: "Please enter correct credentials."});
+        }
+
+        //Compares password with the entered password
+        const comparePassword = await bcrypt.compare(password, user.password);
+        if(!comparePassword){
+            res.status(400).json({errors: "Please enter correct credentials."});
+        }
+
+        // Here we took id as "reference signature" of token
+        const payLoad = {
+            user : {
+                id : user.id
+            }
+        }
+        const authToken = jwt.sign(payLoad, JWT_SECRET);
+        res.json({authToken});
+    }
+    catch(err){
+        console.error(err.message);
+        res.status(500).send("Some error occurred");
+    }
+});
+
+//Route3 :-  POST request sent "api/auth/getuser" ! To get logged in user details
+// created a middle-ware 
+router.post('/getuser', fetchuser, async(req, res) => {
+    try {
+        const userId = req.user.id;
+        const user = await User.findById(userId).select("-password");
+        res.json({user});
+    } catch (err) {
+        console.error(err.message);
+        res.status(500).send("Some error occurred");
+    }
+});
 
 module.exports = router
