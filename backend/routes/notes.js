@@ -74,14 +74,14 @@ router.put('/updatenotes/:id', fetchuser, async (req, res) => {
 // Route 4: - Delete note via PUT "api/notes/deletenotes".... Login Required !
 router.put('/deletenotes/:id', fetchuser, async (req, res) => {
     try {
-            //Checks whether the user is associated with the specified notes 
-    let note = await Notes.findById(req.params.id);
-    if (!note) { return res.status(404).send("Not Found !") }
-    // Allows Deletion
-    if (note.user.toString() !== req.user.id) { return res.status(401).send("Access Denied !") }
+        //Checks whether the user is associated with the specified notes 
+        let note = await Notes.findById(req.params.id);
+        if (!note) { return res.status(404).send("Not Found !") }
+        // Allows Deletion
+        if (note.user.toString() !== req.user.id) { return res.status(401).send("Access Denied !") }
 
-    note = await Notes.findByIdAndDelete(req.params.id);
-    res.json({ "Success": "Successfully Deleted", note });
+        note = await Notes.findByIdAndDelete(req.params.id);
+        res.json({ "Success": "Successfully Deleted", note });
     } catch (err) {
         console.error(err.message);
         res.status(500).send("Some error occurred");
