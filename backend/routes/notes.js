@@ -72,7 +72,7 @@ router.put('/updatenotes/:id', fetchuser, async (req, res) => {
 })
 
 // Route 4: - Delete note via PUT "api/notes/deletenotes".... Login Required !
-router.put('/deletenotes/:id', fetchuser, async (req, res) => {
+router.delete('/deletenotes/:id', fetchuser, async (req, res) => {
     try {
         //Checks whether the user is associated with the specified notes 
         let note = await Notes.findById(req.params.id);
