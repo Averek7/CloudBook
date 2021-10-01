@@ -1,11 +1,8 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import { Link, useLocation } from 'react-router-dom'
 
 export default function Navbar(props) {
     let location = useLocation();
-    useEffect(() => {
-        // eslint-disable-next-line
-    }, [location])
     return (
         <div>
             <nav className={`navbar navbar-expand-lg navbar-${props.mode} bg-${props.mode}`}>
@@ -28,11 +25,11 @@ export default function Navbar(props) {
                             <input className="form-control me-2" type="search" placeholder="Search" aria-label="Search" />
                             <button className="btn btn-outline-success" type="submit">Search</button>
                         </form>
+                        <div className="form-check form-switch m-2">
+                            <input className="form-check-input" type="checkbox" id="flexSwitchCheckDefault" onClick={props.toggleMode} />
+                            <label className="form-check-label" htmlFor="flexSwitchCheckDefault">{props.mode === "light" ? "light" : "dark"}</label>
+                        </div>
                     </div>
-                </div>
-                <div className="form-check form-switch mx-2">
-                    <input className="form-check-input" type="checkbox" id="flexSwitchCheckDefault" onClick={props.toggleMode}/>
-                    <label className="form-check-label" htmlFor="flexSwitchCheckDefault">{props.mode === "light" ? "light" : "dark"}</label>
                 </div>
             </nav>
         </div>

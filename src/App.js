@@ -11,20 +11,6 @@ function App() {
   const [mode, setMode] = useState("light");
   const [alert, setAlert] = useState(null);
 
-  const toggleMode = () => {
-    if (mode === "light") {
-      setMode("dark");
-      document.body.style.backgroundColor = "rgb(54,54,54)";
-      document.body.style.color = "azure";
-      showAlert("Enabled Dark Mode", "Success");
-    } else {
-      setMode("light");
-      document.body.style.backgroundColor = "transparent";
-      document.body.style.color = "black";
-      showAlert("Enabled Light Mode", "Success");
-    }
-  };
-
   const showAlert = (message, type) => {
     setAlert({
       msg: message,
@@ -35,6 +21,22 @@ function App() {
     }, 2000);
   }
 
+
+  const toggleMode = () => {
+    if (mode === "light") {
+      setMode("dark");
+      showAlert("Enabled Dark Mode", "success");
+      document.body.style.backgroundColor = "rgb(54,54,54)";
+      document.body.style.color = "azure";
+    } else {
+      setMode("light");
+      showAlert("Enabled Light Mode", "success");
+      document.body.style.backgroundColor = "transparent";
+      document.body.style.color = "black";
+    }
+  };
+
+  
   return (
     <>
       <NoteState>
