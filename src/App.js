@@ -6,6 +6,8 @@ import Alert from "./components/Alert";
 import { useState } from "react";
 import NoteState from "./context/NoteState";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import { Signin } from "./components/Signin";
+import { Signup } from "./components/Signup";
 
 function App() {
   const [mode, setMode] = useState("light");
@@ -50,6 +52,12 @@ function App() {
               </Route>
               <Route exact path="/about">
                 <About mode={mode} toggleMode={toggleMode}/>
+              </Route>
+              <Route exact path="/signin">
+                <Signin mode={mode} toggleMode={toggleMode}/>
+              </Route>
+              <Route exact path="/signup">
+                <Signup mode={mode} toggleMode={toggleMode}/>
               </Route>
             </Switch>
           </div>

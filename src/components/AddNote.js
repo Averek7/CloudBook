@@ -37,7 +37,7 @@ export const AddNote = (props) => {
                             <input type="text" className="form-control" id="tag" name="tag" value={note.tag} placeholder="Enter tag related" onChange={clickChange} minLength={5} required/>
                         </div>
                     </div>
-                    <button type="submit" className={`btn btn-${props.mode === "light" ? "dark" : "light"}`} onClick={btnAdd}>Submit</button>
+                    <button type="submit" className={`btn btn-${props.mode === "light" ? "dark" : "light"} m-2`} onClick={btnAdd}>Add to Notes</button>
                 </div>
             </div>
         </div>
