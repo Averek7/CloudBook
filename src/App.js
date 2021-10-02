@@ -48,16 +48,16 @@ function App() {
           <div className="container">
             <Switch>
               <Route exact path="/">
-                <Home mode={mode} toggleMode={toggleMode}/>
+                <Home mode={mode} toggleMode={toggleMode} showAlert={showAlert}/>
               </Route>
               <Route exact path="/about">
                 <About mode={mode} toggleMode={toggleMode}/>
               </Route>
               <Route exact path="/signin">
-                <Signin mode={mode} toggleMode={toggleMode}/>
+                <Signin mode={mode} toggleMode={toggleMode} showAlert={showAlert}/>
               </Route>
               <Route exact path="/signup">
-                <Signup mode={mode} toggleMode={toggleMode}/>
+                <Signup mode={mode} toggleMode={toggleMode} showAlert={showAlert}/>
               </Route>
             </Switch>
           </div>

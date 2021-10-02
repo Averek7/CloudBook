@@ -1,15 +1,22 @@
 import React, { useContext, useState, useEffect, useRef } from 'react'
 import NoteContext from '../context/NoteContext'
 import { NoteItem } from './NoteItem';
+import {useHistory} from "react-router-dom"
 
 export const Notes = (props) => {
+    let history = useHistory()
     const context = useContext(NoteContext);
     const { notes, getAllnote, editNote } = context;
     const ref = useRef(null);
     const refClose = useRef(null);
 
     useEffect(() => {
-        getAllnote();
+        if(localStorage.getItem('token')){
+            getAllnote();
+        }
+        else{
+            history.push("/signin");
+        }
         // eslint-disable-next-line
     }, []);
 
@@ -28,6 +35,7 @@ export const Notes = (props) => {
     const btnUpdate = (e) => {
         e.preventDefault();
         editNote(note.id, note.etitle, note.edescription, note.etag);
+        props.showAlert("Successfully Edited", "success");
         refClose.current.click();
     }
 
@@ -69,9 +77,9 @@ export const Notes = (props) => {
             <h2 className="text-center m-2">Your Notes</h2>
             <div className={`container d-block m-auto`}>
                 <div className="row m-3">
-                    {notes.length === 0 ? "Your Note Collection is Empty" :
-                    notes.map((elem) => (
-                        <NoteItem key={elem._id} note={elem} updateNote={updateNote} mode={props.mode} />
+                    {notes?.length === 0 ? "Your Note Collection is Empty" :
+                    notes?.map((elem) => (
+                        <NoteItem key={elem._id} note={elem} updateNote={updateNote} mode={props.mode} showAlert={props.showAlert}/>
                     ))
                     }
                 </div>

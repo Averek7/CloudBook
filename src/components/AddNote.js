@@ -15,6 +15,7 @@ export const AddNote = (props) => {
     const btnAdd = (e) => {
         e.preventDefault();
         addNote(note.title, note.description, note.tag);
+        props.showAlert("Note added to collection", "success");
         setNote({title: "", description: "", tag: ""});
     }
 

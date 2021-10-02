@@ -25,17 +25,19 @@ export const Signin = (props) => {
         console.log(json);
         if(json.success){
             //redirect
-            history.push("/")
+            localStorage.setItem('token', json.authToken);
+            history.push("/");
+            props.showAlert("Successfully Logged-in !", "success");
         }
         else{
-            alert("Invalid Crendentials")
+            props.showAlert("Invalid Credentials Entries", "danger");
         }
     }
 
     return (
         <div>
             <div className="container me-2">
-                <div className="container m-3">
+                <div className={`container me-5 my-5 p-5 bg-${props.mode}`}>
                     <form onSubmit={btnSubmit}>
                         <div className="mb-3">
                             <label htmlFor="email" className="form-label">Email address</label>

@@ -7,8 +7,8 @@ export default function Home(props) {
 
     return (
         <>
-            <AddNote mode = {props.mode} />
-            <Notes mode = {props.mode} />
+            <AddNote mode = {props.mode} showAlert={props.showAlert}/>
+            <Notes mode = {props.mode} showAlert={props.showAlert}/>
         </>
     )
 }

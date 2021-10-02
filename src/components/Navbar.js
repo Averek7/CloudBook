@@ -1,8 +1,16 @@
 import React from 'react'
-import { Link, useLocation } from 'react-router-dom'
+import { Link, useLocation, useHistory } from 'react-router-dom'
 
 export default function Navbar(props) {
     let location = useLocation();
+    const history = useHistory();
+
+    const btnLogout = () => {
+        localStorage.clear();
+        history.push("/signin");
+        props.showAlert("Successfully Logged Out", "success");
+    }
+
     return (
         <div>
             <nav className={`navbar navbar-expand-lg navbar-${props.mode} bg-${props.mode}`}>
@@ -21,10 +29,10 @@ export default function Navbar(props) {
                             </li>
 
                         </ul>
-                        <div className="d-flex">
+                        {(!localStorage.getItem('token')) ? <div className="d-flex">
                             <Link className="btn btn-secondary mx-1" to="/signin" role="button">Sign-In</Link>
                             <Link className="btn btn-secondary mx-1" to="/signup" role="button">Sign-Up</Link>
-                        </div>
+                        </div> : <div className="d-flex"> <Link className="btn btn-secondary mx-1" to="/signin" role="button" onClick={btnLogout}>Sign-Out</Link></div>}
                         <div className="form-check form-switch m-2">
                             <input className="form-check-input" type="checkbox" id="flexSwitchCheckDefault" onClick={props.toggleMode} />
                             <label className="form-check-label" htmlFor="flexSwitchCheckDefault">{props.mode === "light" ? "light" : "dark"}</label>
