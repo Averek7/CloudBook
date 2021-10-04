@@ -48,8 +48,8 @@ export const Signin = (props) => {
                             <label htmlFor="password" className="form-label">Password</label>
                             <input type="password" className="form-control" id="password" name="password" value={credential.password} onChange={clickChange}/>
                         </div>
-                        <button type="submit" className="btn btn-primary my-2">Sign - In</button>
-                        <button type="reset" className="btn btn-primary my-2 mx-3">Cancel</button>
+                        <button type="submit" className={`btn btn-${props.mode === "light" ? "dark" : "light"} my-2`}>Sign - In</button>
+                        <button type="reset" className={`btn btn-${props.mode === "light" ? "dark" : "light"} my-2 mx-3`}>Cancel</button>
                     </form>
                 </div>
             </div>

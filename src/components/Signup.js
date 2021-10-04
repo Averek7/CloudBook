@@ -14,24 +14,28 @@ export const Signup = (props) => {
 
     const btnSubmit = async (e) => {
         e.preventDefault();
-        console.log("Submit clicked !");
-        const response = await fetch(`${host}/api/auth/createuser`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ name: credential.name, email: credential.email, password: credential.password })
-        });
-        const json = await response.json();
-        console.log(json);
-        if (json.success) {
-            //redirect
-            history.push("/");
-            props.showAlert("Account created successfully", "success");
+        if(credential.password === credential.cpassword){
+            const response = await fetch(`${host}/api/auth/createuser`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ name: credential.name, email: credential.email, password: credential.password })
+            });
+            const json = await response.json();
+            console.log(json);
+            if (json.success) {
+                //redirect
+                history.push("/");
+                props.showAlert("Account created successfully", "success");
+            }
+            else {
+                props.showAlert("Invalid Credentials Entries", "danger");
+    
+            }
         }
-        else {
-            props.showAlert("Invalid Credentials Entries", "danger");
-
+        else{
+            props.showAlert("Password Mismatch Found", "danger");
         }
     }
 
@@ -59,8 +63,8 @@ export const Signup = (props) => {
                             <input type="password" className="form-control" id="cpassword" name="cpassword" value={credential.cpassword} onChange={clickChange} minLength={8} required />
                             <span className="form-text mx-2">To verify re-enter password</span>
                         </div>
-                        <button type="submit" className="btn btn-primary my-2">Sign - Up</button>
-                        <button type="reset" className="btn btn-primary my-2 mx-3">Cancel</button>
+                        <button type="submit" className={`btn btn-${props.mode === "light" ? "dark" : "light"} my-2`}>Sign - Up</button>
+                        <button type="reset" className={`btn btn-${props.mode === "light" ? "dark" : "light"} my-2 mx-3`}>Cancel</button>
                     </form>
                 </div>
             </div>
