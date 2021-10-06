@@ -5,7 +5,7 @@ const bcrypt = require('bcryptjs');                                      // Encr
 const { body, validationResult } = require('express-validator');         // Validation of models
 const jwt = require('jsonwebtoken');                                      // User Authentication token
 const fetchuser = require('../middleware/fetchuser');
-const JWT_SECRET = "fucktheworld";
+const JWT_SECRET = "secret_token_user";
 
 //Route1 :-  POST request sent "/api/auth/createuser" ! To create the user so as to store in DB
 router.post('/createuser', [
