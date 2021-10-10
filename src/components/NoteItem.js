@@ -11,7 +11,7 @@ export const NoteItem = (props) => {
             <div className="col-md-3 my-2">
                 <div className="card" style={{ width: "16.5rem", display: "flex", flexDirection: "row-reverse", position: "relative", border: "none" }}>
                     <div className={`bg-${props.mode}`} style={{ fontSize: "18px", textAlign: "center" }}>
-                        <i className="fas fa-trash" onClick={() => { deleteNote(note._id); props.showAlert("Successfully Deleted", "success"); }}></i>
+                        <i className="fas fa-trash" onClick={() => { deleteNote(note._id)}}></i>
                         <i className="fas fa-edit" onClick={() => { updateNote(note) }}></i>
                     </div>
 

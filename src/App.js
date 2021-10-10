@@ -8,6 +8,8 @@ import NoteState from "./context/NoteState";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { Signin } from "./components/Signin";
 import { Signup } from "./components/Signup";
+import Profile from "./components/Profile";
+
 
 function App() {
   const [mode, setMode] = useState("light");
@@ -58,6 +60,9 @@ function App() {
               </Route>
               <Route exact path="/signup">
                 <Signup mode={mode} toggleMode={toggleMode} showAlert={showAlert}/>
+              </Route>
+              <Route exact path="/profile">
+                <Profile mode={mode} toggleMode={toggleMode} showAlert={showAlert} />
               </Route>
             </Switch>
           </div>

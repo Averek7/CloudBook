@@ -4,12 +4,21 @@ const Notes = require('../models/Notes');
 const { body, validationResult } = require('express-validator');         // Validation of models                             // Structure or model in which data is stored
 const fetchuser = require('../middleware/fetchuser');
 
-
 // Route 1: - Get all notes via GET "api/notes/fetchallnotes".... Login Required !
 router.get('/fetchallnotes', fetchuser, async (req, res) => {
     try {
         const notes = await Notes.find({ user: req.user.id });
         res.json({ notes });
+    } catch (err) {
+        console.error(err.message);
+        res.status(500).send("Some error occurred");
+    }
+});
+
+router.delete('/deleteallnotes', fetchuser, async (req, res) => {
+    try {
+        let notes = await Notes.deleteMany({user: req.user.id});
+        res.json({notes});
     } catch (err) {
         console.error(err.message);
         res.status(500).send("Some error occurred");
@@ -71,12 +80,13 @@ router.put('/updatenotes/:id', fetchuser, async (req, res) => {
     }
 })
 
-// Route 4: - Delete note via PUT "api/notes/deletenotes".... Login Required !
+// Route 4: - Delete note via delete "api/notes/deletenotes".... Login Required !
 router.delete('/deletenotes/:id', fetchuser, async (req, res) => {
     try {
         //Checks whether the user is associated with the specified notes 
         let note = await Notes.findById(req.params.id);
         if (!note) { return res.status(404).send("Not Found !") }
+        
         // Allows Deletion
         if (note.user.toString() !== req.user.id) { return res.status(401).send("Access Denied !") }
 
@@ -86,7 +96,6 @@ router.delete('/deletenotes/:id', fetchuser, async (req, res) => {
         console.error(err.message);
         res.status(500).send("Some error occurred");
     }
-
 });
 
 module.exports = router

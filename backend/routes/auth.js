@@ -18,6 +18,7 @@ router.post('/createuser', [
 ], async(req, res) => {
 
     // if there are errors, return a Bad Request and the errors
+
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
       return res.status(400).json({ errors: errors.array() });
@@ -33,6 +34,7 @@ router.post('/createuser', [
 
 
     // Checks whether the user with this email exists or not
+
     try {
         // returns a promise that is resolved by async/await approach
         let success;
@@ -119,8 +121,7 @@ router.post('/login', [
 });
 
 //Route3 :-  POST request sent "api/auth/getuser" ! To get logged in user details
-// created a middle-ware 
-router.post('/getuser', fetchuser, async(req, res) => {
+router.post('/getuser', fetchuser, async(req, res) => {       // created a middle-ware "fetchuser"
     try {
         const userId = req.user.id;
         const user = await User.findById(userId).select("-password");
@@ -130,5 +131,15 @@ router.post('/getuser', fetchuser, async(req, res) => {
         res.status(500).send("Some error occurred");
     }
 });
+
+router.delete('/deleteuser', fetchuser, async(req, res) => {       // created a middle-ware "fetchuser"
+    try {
+        const user = await User.findByIdAndDelete({user: req.user.id});
+        res.json({message: 'User deleted', user })
+    } catch (err) {
+        res.status(500).send(err.message,`Some error occurred !`);
+    }
+});
+
 
 module.exports = router
