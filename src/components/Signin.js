@@ -37,16 +37,16 @@ export const Signin = (props) => {
     return (
         <div>
             <div className="container me-2">
-                <div className={`container me-5 my-5 p-5 bg-${props.mode}`}>
-                    <form onSubmit={btnSubmit}>
+                <div className={`container me-5 my-5 p-5 bg-${props.mode ? "light" : "dark"}`} style={{border: '2px solid gray', borderRadius: '20px'}}>
+                    <form onSubmit={btnSubmit} style={{fontWeight: "bold"}}>
                         <div className="mb-3">
-                            <label htmlFor="email" className="form-label">Email address</label>
-                            <input type="email" className="form-control" id="email" name="email" value={credential.email} aria-describedby="emailHelp" onChange={clickChange}/>
+                            <label htmlFor="email" className="form-label" >Email address</label>
+                            <input style={{border: '2px solid black'}} type="email" className="form-control" id="email" name="email" value={credential.email} aria-describedby="emailHelp" onChange={clickChange}/>
                             <div id="emailHelp" className="form-text">We'll never share your email with anyone else.</div>
                         </div>
                         <div className="mb-3">
                             <label htmlFor="password" className="form-label">Password</label>
-                            <input type="password" className="form-control" id="password" name="password" value={credential.password} onChange={clickChange}/>
+                            <input style={{border: '2px solid black'}} type="password" className="form-control" id="password" name="password" value={credential.password} onChange={clickChange}/>
                         </div>
                         <button type="submit" className={`btn btn-${props.mode === "light" ? "dark" : "light"} my-2`}>Sign - In</button>
                         <button type="reset" className={`btn btn-${props.mode === "light" ? "dark" : "light"} my-2 mx-3`}>Cancel</button>
