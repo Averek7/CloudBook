@@ -1,0 +1,22 @@
+{
+  "files": {
+    "main.css": "/CloudBook/static/css/main.ccf22ba4.chunk.css",
+    "main.js": "/CloudBook/static/js/main.b9d09afc.chunk.js",
+    "main.js.map": "/CloudBook/static/js/main.b9d09afc.chunk.js.map",
+    "runtime-main.js": "/CloudBook/static/js/runtime-main.3b281ff2.js",
+    "runtime-main.js.map": "/CloudBook/static/js/runtime-main.3b281ff2.js.map",
+    "static/js/2.cffa4d54.chunk.js": "/CloudBook/static/js/2.cffa4d54.chunk.js",
+    "static/js/2.cffa4d54.chunk.js.map": "/CloudBook/static/js/2.cffa4d54.chunk.js.map",
+    "static/js/3.1a6bc136.chunk.js": "/CloudBook/static/js/3.1a6bc136.chunk.js",
+    "static/js/3.1a6bc136.chunk.js.map": "/CloudBook/static/js/3.1a6bc136.chunk.js.map",
+    "index.html": "/CloudBook/index.html",
+    "static/css/main.ccf22ba4.chunk.css.map": "/CloudBook/static/css/main.ccf22ba4.chunk.css.map",
+    "static/js/2.cffa4d54.chunk.js.LICENSE.txt": "/CloudBook/static/js/2.cffa4d54.chunk.js.LICENSE.txt"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.3b281ff2.js",
+    "static/js/2.cffa4d54.chunk.js",
+    "static/css/main.ccf22ba4.chunk.css",
+    "static/js/main.b9d09afc.chunk.js"
+  ]
+}
